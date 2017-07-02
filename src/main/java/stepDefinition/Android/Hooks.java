@@ -4,6 +4,7 @@ import Reporting.ExtentManager;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import utils.DriverFactory;
+import utils.Log;
 
 import java.net.MalformedURLException;
 
@@ -21,11 +22,15 @@ public class Hooks extends DriverFactory{
     }
 
     @After
-    public void afterHookfunction()
-    {
-        extent.flush();
-        extent.close();
-        teardown();
-    }
+    public void afterHookfunction() {
+        try {
 
+            extent.flush();
+            extent.close();
+            teardown();
+        } catch (Exception e) {
+            Log.error("Error : " + e.getMessage());
+
+        }
+    }
 }
